@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
 
     public BallCreator ballCreator;
     public Transform dynamicObjects;
-    public int ballIdLimit = 6;
     public bool testMode = false;
+    public int ballMatchCount = 2;
     [SerializeField] int ballCreateCount = 4;
     [HideInInspector] public List<Ball> allBallsOnStage;
 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (Ball bb in allBallsOnStage)
         {
-            if (bb.GetCorrectNeighbourBalls().Count > 0)
+            if (bb.GetCorrectNeighbourBalls().Count >= ballMatchCount)
                 return true;
         }
         return false;

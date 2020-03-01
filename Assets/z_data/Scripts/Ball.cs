@@ -7,10 +7,9 @@ public class Ball : MonoBehaviour
 {
     public CircleCollider2D circleCollider;
     public Rigidbody2D rbd;
-    [SerializeField] Sprite[] allSprites;
-    [SerializeField] Material[] allMaterials;
+    public Sprite[] allSprites;
+    public Transform shineTr;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Renderer sphereRenderer;
     [SerializeField] float scanRadius = 3f;
 
     List<Ball> connectedBalls = new List<Ball>();
@@ -24,11 +23,15 @@ public class Ball : MonoBehaviour
         markedForDeletion = false;
     }
 
+    void Update()
+    {
+        shineTr.position = gameObject.transform.position;
+    }
+
     public void SetId(int _id)
     {
         id = _id;
         spriteRenderer.sprite = allSprites[_id];
-        sphereRenderer.material = allMaterials[_id];
     }
 
     public List<Ball> GetCorrectNeighbourBalls()
@@ -69,7 +72,7 @@ public class Ball : MonoBehaviour
     public void Destroy()
     {
         List<Ball> otherBalls = GetCorrectNeighbourBalls();
-        if (!markedForDeletion && otherBalls.Count > 0)
+        if (!markedForDeletion && otherBalls.Count >= GameManager.Instance.ballMatchCount)
         {
             markedForDeletion = true;
             foreach (Ball ob in otherBalls)
@@ -78,19 +81,9 @@ public class Ball : MonoBehaviour
                     ob.Destroy();
             }
             GameManager.Instance.allBallsOnStage.Remove(this);
+            Destroy(shineTr.gameObject, 0.1f);
             Destroy(gameObject, 0.1f);
         }
         GameManager.Instance.CheckForLevelEndState();
-    }
-
-    int GetNeighbourBallCountOfSameId()
-    {
-        int rCount = 0;
-        foreach (Ball bb in connectedBalls)
-        {
-            if (bb != null && bb.id == id)
-                rCount++;
-        }
-        return rCount;
     }
 }
