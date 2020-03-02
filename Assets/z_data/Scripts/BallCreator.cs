@@ -16,6 +16,8 @@ public class BallCreator : MonoBehaviour
 
     IEnumerator StartCreatingBalls(int _count)
     {
+        // load all the sprites from the resources 
+        Sprite[] allBallSprites = Resources.LoadAll<Sprite>(GameManager.Instance.currentTheme + "/balls");
         while (_count > 0)
         {
             yield return new WaitForSeconds(0.05f);
@@ -23,7 +25,9 @@ public class BallCreator : MonoBehaviour
             newBall.gameObject.name = "ball_" + _count;
             newBall.transform.parent = GameManager.Instance.dynamicObjects;
             newBall.transform.localPosition = Random.insideUnitCircle * 0.5f;
-            newBall.SetId(Random.Range(0, newBall.allSprites.Length));
+
+            int randomIndex = Random.Range(0, allBallSprites.Length);
+            newBall.SetId(randomIndex, allBallSprites[randomIndex]);
             GameManager.Instance.allBallsOnStage.Add(newBall);
 
             newBall.shineTr = Instantiate(shinePrefab, transform.position, Quaternion.identity).gameObject.transform;

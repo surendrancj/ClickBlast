@@ -73,7 +73,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.28, y: 4.28}
+  m_Size: {x: 3.89, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1669046319456917695}
   - component: {fileID: 1669046319456917692}
   - component: {fileID: 1669046319456917682}
+  - component: {fileID: 2437439808124633282}
   m_Layer: 0
   m_Name: ball
   m_TagString: Untagged
@@ -164,12 +165,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 1669046319456917695}
   rbd: {fileID: 1669046319456917692}
-  allSprites:
-  - {fileID: 21300008, guid: 86a0d89c92ef84df9a37f2dcad8323eb, type: 3}
-  - {fileID: 21300010, guid: 86a0d89c92ef84df9a37f2dcad8323eb, type: 3}
-  - {fileID: 21300006, guid: 86a0d89c92ef84df9a37f2dcad8323eb, type: 3}
-  - {fileID: 21300014, guid: 86a0d89c92ef84df9a37f2dcad8323eb, type: 3}
-  - {fileID: 21300012, guid: 86a0d89c92ef84df9a37f2dcad8323eb, type: 3}
+  shineTr: {fileID: 0}
   spriteRenderer: {fileID: 1669046319233118652}
   scanRadius: 0.4
   id: 0
+--- !u!114 &2437439808124633282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669046319456917683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb9295558debd040818c61f2f32bdc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundMaterial: {fileID: 11400000, guid: c995e6614677d594691c76fafdd6ca2a, type: 2}
+  AutoCreateSources: 0
+  PlayClipAtPoint: 1
+  HitsTriggers: 0
+  ImpactAudio: {fileID: 8212558, guid: bdac02d039e6c2f4dae6e3e57d2da17d, type: 3}
+  AudioContainers: []

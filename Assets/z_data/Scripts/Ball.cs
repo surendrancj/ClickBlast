@@ -7,7 +7,6 @@ public class Ball : MonoBehaviour
 {
     public CircleCollider2D circleCollider;
     public Rigidbody2D rbd;
-    public Sprite[] allSprites;
     public Transform shineTr;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] float scanRadius = 3f;
@@ -28,10 +27,10 @@ public class Ball : MonoBehaviour
         shineTr.position = gameObject.transform.position;
     }
 
-    public void SetId(int _id)
+    public void SetId(int _id, Sprite _sprite)
     {
         id = _id;
-        spriteRenderer.sprite = allSprites[_id];
+        spriteRenderer.sprite = _sprite;
     }
 
     public List<Ball> GetCorrectNeighbourBalls()
@@ -69,20 +68,35 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    void CreateBurstParticleEffect()
+    {
+        GameObject effect = Resources.Load<GameObject>(GameManager.Instance.currentTheme + "\\burst_effect");
+        if (effect != null)
+        {
+            GameObject eff = Instantiate(effect, transform.position, Quaternion.identity);
+            eff.transform.position = new Vector3(eff.transform.position.x, eff.transform.position.y, -1.3f);
+            Destroy(eff, 2f);
+        }
+    }
+
+    public void Destroy(float _ddelay = 0.1f)
     {
         List<Ball> otherBalls = GetCorrectNeighbourBalls();
         if (!markedForDeletion && otherBalls.Count >= GameManager.Instance.ballMatchCount)
         {
             markedForDeletion = true;
-            foreach (Ball ob in otherBalls)
+            for (int i = 0; i < otherBalls.Count; i++)
             {
-                if (ob != null)
-                    ob.Destroy();
+                if (otherBalls[i] != null)
+                    otherBalls[i].Destroy(i * .3f);
             }
             GameManager.Instance.allBallsOnStage.Remove(this);
-            Destroy(shineTr.gameObject, 0.1f);
-            Destroy(gameObject, 0.1f);
+
+            CreateBurstParticleEffect();
+            GameManager.Instance.PlayFxAudio(Constants.BURST_FX);
+
+            Destroy(shineTr.gameObject, _ddelay);
+            Destroy(gameObject, _ddelay);
         }
         GameManager.Instance.CheckForLevelEndState();
     }

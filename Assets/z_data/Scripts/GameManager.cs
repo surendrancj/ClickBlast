@@ -29,7 +29,10 @@ public class GameManager : MonoBehaviour
     public Transform dynamicObjects;
     public bool testMode = false;
     public int ballMatchCount = 2;
+    public string currentTheme = "theme_1";
     [SerializeField] int ballCreateCount = 4;
+    [SerializeField] AudioSource fxAudioSource;
+    [SerializeField] AudioSource bgAudioSource;
     [HideInInspector] public List<Ball> allBallsOnStage;
 
     // Start is called before the first frame update
@@ -68,6 +71,21 @@ public class GameManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void PlayFxAudio(string _clipName)
+    {
+        string clipPath = GameManager.Instance.currentTheme + "/" + _clipName;
+        AudioClip clip = Resources.Load<AudioClip>(clipPath);
+
+        if (clip != null)
+        {
+            fxAudioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            print("audio file not found " + clipPath);
+        }
     }
 
 }
