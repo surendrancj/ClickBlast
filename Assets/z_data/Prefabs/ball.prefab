@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1669046319233118642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0325068, y: 1.0325068, z: 1.0325068}
+  m_LocalScale: {x: 1.57003, y: 1.57003, z: 1.57003}
   m_Children: []
   m_Father: {fileID: 1669046319456917693}
   m_RootOrder: 0
@@ -181,9 +181,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb9295558debd040818c61f2f32bdc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMaterial: {fileID: 11400000, guid: c995e6614677d594691c76fafdd6ca2a, type: 2}
+  SoundMaterial: {fileID: 11400000, guid: 0e0e518e4d00b3448bf0fc5509ab493f, type: 2}
   AutoCreateSources: 0
   PlayClipAtPoint: 1
   HitsTriggers: 0
   ImpactAudio: {fileID: 8212558, guid: bdac02d039e6c2f4dae6e3e57d2da17d, type: 3}
-  AudioContainers: []
+  AudioContainers:
+  - KeyIndex: 0
+    SlideAudio: {fileID: 0}
+  - KeyIndex: 1
+    SlideAudio: {fileID: 0}

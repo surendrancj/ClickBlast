@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource bgAudioSource;
     [HideInInspector] public List<Ball> allBallsOnStage;
+    [HideInInspector] public int uniqueBallCount = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +87,17 @@ public class GameManager : MonoBehaviour
         {
             print("audio file not found " + clipPath);
         }
+    }
+
+    public List<Sprite> GetAllBallSprites()
+    {
+        List<Sprite> allBallSprites = new List<Sprite>();
+        for (int i = 0; i < uniqueBallCount; i++)
+        {
+            Sprite ballSprite = Resources.Load<Sprite>("ball_" + i);
+            allBallSprites.Add(ballSprite);
+        }
+        return allBallSprites;
     }
 
 }

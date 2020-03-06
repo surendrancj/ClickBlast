@@ -98,6 +98,6 @@ public class Ball : MonoBehaviour
             Destroy(shineTr.gameObject, _ddelay);
             Destroy(gameObject, _ddelay);
         }
-        GameManager.Instance.CheckForLevelEndState();
+        // GameManager.Instance.CheckForLevelEndState();
     }
 }
