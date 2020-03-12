@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1500f2d8a623c47f7970f66c9ecac3c4
+guid: 442f3f404ded544d9bf485e1e6f1bcbf
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: BEAR HUGS BY RATTICSASSIN
+  fontName: Coolvetica
   fontNames:
-  - BEAR HUGS BY RATTICSASSIN
+  - Coolvetica
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -14,54 +14,38 @@ public class GameManager : MonoBehaviour
     }
     void Awake()
     {
-        if (Instance == null)
+        // don't fucking move this check 
+        if (Instance == null)
         {
+            DontDestroyOnLoad(this.gameObject);
             Instance = this;
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             return;
         }
     }
 
     public BallCreator ballCreator;
     public Transform dynamicObjects;
-    public bool testMode = false;
     public int ballMatchCount = 2;
-    public string currentTheme = "theme_1";
+    public string themeIndex = "1";
+    public ThemeData currentTheme;
+    public List<Sprite> allBallSprites;
     [SerializeField] int ballCreateCount = 4;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource bgAudioSource;
     [HideInInspector] public List<Ball> allBallsOnStage;
     [HideInInspector] public int uniqueBallCount = 6;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        ballCreator.CreateBalls(ballCreateCount);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            testMode = true;
-        }
-        if (Input.GetKeyUp(KeyCode.T))
-        {
-            testMode = false;
-        }
-    }
-
-    public void CheckForLevelEndState()
-    {
-        if (!IsThereAnyMatchFound())
-        {
-            // print("level ended");
-            ballCreator.CreateBalls(ballCreateCount);
-        }
+        // load current theme 
+        currentTheme = Resources.Load<ThemeData>("theme_" + themeIndex + "/theme_data");
+        print("asdf " + currentTheme.allBallColors.Length);
     }
 
     public bool IsThereAnyMatchFound()
@@ -91,11 +75,14 @@ public class GameManager : MonoBehaviour
 
     public List<Sprite> GetAllBallSprites()
     {
-        List<Sprite> allBallSprites = new List<Sprite>();
-        for (int i = 0; i < uniqueBallCount; i++)
+        if (allBallSprites.Count <= 0)
         {
-            Sprite ballSprite = Resources.Load<Sprite>("ball_" + i);
-            allBallSprites.Add(ballSprite);
+            allBallSprites = new List<Sprite>();
+            for (int i = 0; i < uniqueBallCount; i++)
+            {
+                Sprite ballSprite = Resources.Load<Sprite>("ball_" + i);
+                allBallSprites.Add(ballSprite);
+            }
         }
         return allBallSprites;
     }

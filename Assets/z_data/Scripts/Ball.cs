@@ -27,6 +27,11 @@ public class Ball : MonoBehaviour
         shineTr.position = gameObject.transform.position;
     }
 
+    public void SetColor(Color _color)
+    {
+        spriteRenderer.color = _color;
+    }
+
     public void SetId(int _id, Sprite _sprite)
     {
         id = _id;
@@ -50,22 +55,7 @@ public class Ball : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameManager.Instance.testMode)
-            PrintAllConnectedBalls();
-        else
-            Destroy();
-    }
-
-    void PrintAllConnectedBalls()
-    {
-        print("clicked on " + gameObject.name + " id " + id);
-        List<Ball> otherBalls = GetCorrectNeighbourBalls();
-        print("other ball count " + otherBalls.Count);
-        foreach (Ball bb in otherBalls)
-        {
-            if (bb != null && bb.id == id)
-                print(bb.gameObject.name);
-        }
+        Destroy();
     }
 
     void CreateBurstParticleEffect()
