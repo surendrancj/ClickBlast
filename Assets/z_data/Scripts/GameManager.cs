@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -33,6 +34,13 @@ public class GameManager : MonoBehaviour
     public string themeIndex = "1";
     public ThemeData currentTheme;
     public List<Sprite> allBallSprites;
+
+    public int TotalStars
+    {
+        get => PlayerPrefs.GetInt("total_stars", 0);
+        set => PlayerPrefs.SetInt("total+stars", value);
+    }
+
     [SerializeField] int ballCreateCount = 4;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource bgAudioSource;
@@ -85,6 +93,29 @@ public class GameManager : MonoBehaviour
             }
         }
         return allBallSprites;
+    }
+
+    public bool IsLevelLocked(int _levelIndex)
+    {
+        if (_levelIndex == 1)
+            return false;
+        else
+            return !PlayerPrefs.HasKey(Constants.LEVEL_LOCK_KEY + _levelIndex);
+    }
+
+    public void UnlockLevel(int _levelIndex)
+    {
+        PlayerPrefs.SetInt(Constants.LEVEL_LOCK_KEY + _levelIndex, 1);
+    }
+
+    public void LockLevel(int _levelIndex)
+    {
+        PlayerPrefs.DeleteKey(Constants.LEVEL_LOCK_KEY + _levelIndex);
+    }
+
+    public void LoadLevel(int _levelId)
+    {
+        SceneManager.LoadScene("level_" + _levelId);
     }
 
 }
