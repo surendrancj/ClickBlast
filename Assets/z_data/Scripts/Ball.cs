@@ -83,7 +83,7 @@ public class Ball : MonoBehaviour
             GameManager.Instance.allBallsOnStage.Remove(this);
 
             CreateBurstParticleEffect();
-            GameManager.Instance.PlayFxAudio(Constants.BURST_FX);
+            GameManager.Instance.PlayFxAudio(GameManager.Instance.currentTheme.burstAudioClip.name);
 
             Destroy(shineTr.gameObject, _ddelay);
             Destroy(gameObject, _ddelay);

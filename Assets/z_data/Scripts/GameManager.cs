@@ -31,29 +31,46 @@ public class GameManager : MonoBehaviour
     public BallCreator ballCreator;
     public Transform dynamicObjects;
     public int ballMatchCount = 2;
-    public string themeIndex = "1";
-    public ThemeData currentTheme;
     public List<Sprite> allBallSprites;
-
-    public int TotalStars
-    {
-        get => PlayerPrefs.GetInt("total_stars", 0);
-        set => PlayerPrefs.SetInt("total+stars", value);
-    }
+    public ThemeData currentTheme;
 
     [SerializeField] int ballCreateCount = 4;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource bgAudioSource;
+    [SerializeField] GameObject levelData;
     [HideInInspector] public List<Ball> allBallsOnStage;
     [HideInInspector] public int uniqueBallCount = 6;
 
+    public int ballSpriteIndex = 0;
+
+    bool _pauseGame = false;
+    public bool PauseGame
+    {
+        get
+        {
+            return _pauseGame;
+        }
+        set
+        {
+            _pauseGame = value;
+            if (_pauseGame)
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         // load current theme 
-        currentTheme = Resources.Load<ThemeData>("theme_" + themeIndex + "/theme_data");
-        print("asdf " + currentTheme.allBallColors.Length);
+        int themeIndex = UnityEngine.Random.Range(0, 16);
+        currentTheme = Resources.Load<ThemeData>("theme_data_" + themeIndex);
+
+        // create bg 
+        GameObject newBg = Instantiate(currentTheme.bgPrefab, levelData.transform);
+        ballSpriteIndex = UnityEngine.Random.Range(0, allBallSprites.Count);
+        ballCreator.CreateFirstBalls(60);
     }
 
     public bool IsThereAnyMatchFound()
@@ -68,8 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayFxAudio(string _clipName)
     {
-        string clipPath = GameManager.Instance.currentTheme + "/" + _clipName;
-        AudioClip clip = Resources.Load<AudioClip>(clipPath);
+        AudioClip clip = Resources.Load<AudioClip>(_clipName);
 
         if (clip != null)
         {
@@ -77,7 +93,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            print("audio file not found " + clipPath);
+            print("audio file not found " + _clipName);
         }
     }
 
@@ -115,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int _levelId)
     {
-        SceneManager.LoadScene("level_" + _levelId);
+        SceneManager.LoadScene("game");
     }
 
 }

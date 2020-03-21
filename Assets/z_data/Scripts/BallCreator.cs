@@ -18,24 +18,8 @@ public class BallCreator : MonoBehaviour
         GameManager.Instance.allBallsOnStage = new List<Ball>();
         ballCreationCount += _count;
         StartCoroutine(CreateFirstSetBalls(_count));
+        StartCoroutine(StartCreateBalls());
     }
-
-    public void CreateMenuBalls()
-    {
-        StopAllCoroutines();
-        StartCoroutine(CreateMenuSetBalls(300));
-    }
-
-    IEnumerator CreateMenuSetBalls(int _count)
-    {
-        while (_count > 0)
-        {
-            yield return new WaitForSeconds(0.05f);
-            CreateNewBall(_count, GameManager.Instance.GetAllBallSprites());
-            _count--;
-        }
-    }
-
 
     IEnumerator StartCreateBalls()
     {
@@ -45,7 +29,7 @@ public class BallCreator : MonoBehaviour
             if (!pauseBallCreation)
             {
                 yield return new WaitForSeconds(ballCreatingInterval);
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     yield return new WaitForSeconds(0.2f);
                     ballCreationCount++;
@@ -59,7 +43,6 @@ public class BallCreator : MonoBehaviour
     IEnumerator CreateFirstSetBalls(int _count)
     {
         // load all the sprites from the resources 
-        // Sprite[] allBallSprites = Resources.LoadAll<Sprite>(GameManager.Instance.currentTheme + "/balls");
         while (_count > 0)
         {
             yield return new WaitForSeconds(0.05f);
@@ -75,8 +58,8 @@ public class BallCreator : MonoBehaviour
         newBall.transform.parent = GameManager.Instance.dynamicObjects;
         newBall.transform.localPosition = Vector3.one * Random.insideUnitCircle * 0.5f;
 
-        int randomIndex = Random.Range(0, _allBallSprites.Count);
-        newBall.SetId(randomIndex, _allBallSprites[randomIndex]);
+        int randomIndex = Random.Range(0, GameManager.Instance.currentTheme.allBallColors.Length);
+        newBall.SetId(randomIndex, GameManager.Instance.allBallSprites[GameManager.Instance.ballSpriteIndex]);
         GameManager.Instance.allBallsOnStage.Add(newBall);
 
         newBall.shineTr = Instantiate(shinePrefab, transform.position, Quaternion.identity).gameObject.transform;

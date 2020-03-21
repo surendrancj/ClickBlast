@@ -9,8 +9,7 @@ public class ThemeData : ScriptableObject
     public string themeName = "";
     public AudioClip burstAudioClip;
     public AudioClip bgAudioClip;
-    public Sprite[] allBallSprites;
     public Color[] allBallColors;
-    public Color bgColor;
     public GameObject burstEffectPrefab;
+    public GameObject bgPrefab;
 }
