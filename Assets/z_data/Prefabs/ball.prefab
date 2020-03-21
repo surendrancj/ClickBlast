@@ -167,7 +167,7 @@ MonoBehaviour:
   rbd: {fileID: 1669046319456917692}
   shineTr: {fileID: 0}
   spriteRenderer: {fileID: 1669046319233118652}
-  scanRadius: 0.4
+  scanRadius: 0.3
   id: 0
 --- !u!114 &2437439808124633282
 MonoBehaviour:

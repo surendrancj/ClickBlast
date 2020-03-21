@@ -15,7 +15,7 @@ public class BallCreator : MonoBehaviour
     public void CreateFirstBalls(int _count = 10)
     {
         StopAllCoroutines();
-        GameManager.Instance.allBallsOnStage = new List<Ball>();
+        LevelController.Instance.allBallsOnStage = new List<Ball>();
         ballCreationCount += _count;
         StartCoroutine(CreateFirstSetBalls(_count));
         StartCoroutine(StartCreateBalls());
@@ -33,7 +33,7 @@ public class BallCreator : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.2f);
                     ballCreationCount++;
-                    CreateNewBall(ballCreationCount, GameManager.Instance.GetAllBallSprites());
+                    CreateNewBall(ballCreationCount, LevelController.Instance.GetAllBallSprites());
                 }
             }
         }
@@ -46,7 +46,7 @@ public class BallCreator : MonoBehaviour
         while (_count > 0)
         {
             yield return new WaitForSeconds(0.05f);
-            CreateNewBall(_count, GameManager.Instance.GetAllBallSprites());
+            CreateNewBall(_count, LevelController.Instance.GetAllBallSprites());
             _count--;
         }
     }
@@ -55,17 +55,17 @@ public class BallCreator : MonoBehaviour
     {
         Ball newBall = Instantiate(ballPrefab, transform.position, Quaternion.identity).GetComponent<Ball>();
         newBall.gameObject.name = "ball_" + _count;
-        newBall.transform.parent = GameManager.Instance.dynamicObjects;
+        newBall.transform.parent = LevelController.Instance.dynamicObjects;
         newBall.transform.localPosition = Vector3.one * Random.insideUnitCircle * 0.5f;
 
-        int randomIndex = Random.Range(0, GameManager.Instance.currentTheme.allBallColors.Length);
-        newBall.SetId(randomIndex, GameManager.Instance.allBallSprites[GameManager.Instance.ballSpriteIndex]);
-        GameManager.Instance.allBallsOnStage.Add(newBall);
+        int randomIndex = Random.Range(0, LevelController.Instance.currentTheme.allBallColors.Length);
+        newBall.SetId(randomIndex, LevelController.Instance.allBallSprites[LevelController.Instance.ballSpriteIndex]);
+        LevelController.Instance.allBallsOnStage.Add(newBall);
 
         newBall.shineTr = Instantiate(shinePrefab, transform.position, Quaternion.identity).gameObject.transform;
-        newBall.shineTr.transform.parent = GameManager.Instance.dynamicObjects.transform;
+        newBall.shineTr.transform.parent = LevelController.Instance.dynamicObjects.transform;
 
         // set the ball color 
-        newBall.SetColor(GameManager.Instance.currentTheme.allBallColors[randomIndex]);
+        newBall.SetColor(LevelController.Instance.currentTheme.allBallColors[randomIndex]);
     }
 }

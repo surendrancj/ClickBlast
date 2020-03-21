@@ -55,39 +55,35 @@ public class Ball : MonoBehaviour
 
     void OnMouseDown()
     {
+        print("on mouse down " + gameObject.name);
         Destroy();
     }
 
     void CreateBurstParticleEffect()
     {
-        GameObject effect = Resources.Load<GameObject>(GameManager.Instance.currentTheme + "\\burst_effect");
-        if (effect != null)
-        {
-            GameObject eff = Instantiate(effect, transform.position, Quaternion.identity);
-            eff.transform.position = new Vector3(eff.transform.position.x, eff.transform.position.y, -1.3f);
-            Destroy(eff, 2f);
-        }
+        GameObject eff = Instantiate(LevelController.Instance.currentTheme.burstEffectPrefab, transform.position, Quaternion.identity);
+        eff.transform.position = new Vector3(eff.transform.position.x, eff.transform.position.y, -1.3f);
+        Destroy(eff, 2f);
     }
 
     public void Destroy(float _ddelay = 0.1f)
     {
         List<Ball> otherBalls = GetCorrectNeighbourBalls();
-        if (!markedForDeletion && otherBalls.Count >= GameManager.Instance.ballMatchCount)
+        if (!markedForDeletion && otherBalls.Count >= LevelController.Instance.ballMatchCount)
         {
             markedForDeletion = true;
             for (int i = 0; i < otherBalls.Count; i++)
             {
                 if (otherBalls[i] != null)
-                    otherBalls[i].Destroy(i * .3f);
+                    otherBalls[i].Destroy();
             }
-            GameManager.Instance.allBallsOnStage.Remove(this);
+            LevelController.Instance.allBallsOnStage.Remove(this);
 
             CreateBurstParticleEffect();
-            GameManager.Instance.PlayFxAudio(GameManager.Instance.currentTheme.burstAudioClip.name);
+            GameManager.Instance.PlayFxAudio(LevelController.Instance.currentTheme.burstAudioClip);
 
-            Destroy(shineTr.gameObject, _ddelay);
-            Destroy(gameObject, _ddelay);
+            Destroy(shineTr.gameObject);
+            Destroy(gameObject);
         }
-        // GameManager.Instance.CheckForLevelEndState();
     }
 }

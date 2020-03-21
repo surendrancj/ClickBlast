@@ -36,21 +36,17 @@ public class TinyBoomMenu : MonoBehaviour
     void OpenPanel()
     {
         DOTween.KillAll();
-        mainPanelRect.DOAnchorPosX(0f, 1f).SetEase(Ease.OutQuint).OnComplete(OpenCompleted).SetUpdate(true);
+        mainPanelRect.DOAnchorPosX(0f, 1f).SetEase(Ease.OutQuint).SetUpdate(true);
     }
-
-    void OpenCompleted()
-    {
-
-    }
-
     void ClosePanel()
     {
         DOTween.KillAll();
-        mainPanelRect.DOAnchorPosX(panelCloseX, 1f).SetEase(Ease.OutQuint).OnComplete(CloseCompleted);
+        mainPanelRect.DOAnchorPosX(panelCloseX, 1f).SetEase(Ease.OutQuint);
     }
 
-    void CloseCompleted()
+
+    public void RestartButtonPressed()
     {
+        GameManager.Instance.RestartGame();
     }
 }

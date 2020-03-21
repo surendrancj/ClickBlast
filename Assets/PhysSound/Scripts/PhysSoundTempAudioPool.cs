@@ -6,7 +6,7 @@ namespace PhysSound
 {
     public class PhysSoundTempAudioPool : MonoBehaviour
     {
-		public static int TempAudioPoolSize=100;
+        public static int TempAudioPoolSize = 100;
 
         public static PhysSoundTempAudioPool Instance;
 
@@ -93,7 +93,7 @@ namespace PhysSound
             {
                 PhysSoundTempAudio a = audioSources[i];
 
-                if (!a.gameObject.activeInHierarchy)
+                if (a.gameObject != null && !a.gameObject.activeInHierarchy)
                 {
                     a.PlayClip(clip, point, template, volume, pitch);
 
